@@ -1,31 +1,29 @@
 import 'dart:convert';
 
-enum ChatMessageType {sent, received}
-
 class ChatMessage {
   ChatMessage({
+    this.id,
     this.name,
     this.text,
     this.type,
   });
 
+  final int id;
   final String name;
   final String text;
-  final ChatMessageType type;
+  final String type;
 
-  factory ChatMessage.fromJson(String str) => ChatMessage.fromMap(json.decode(str));
+  ChatMessage chatMessageFromJson(String str) =>
+      ChatMessage.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
+  String chatMessageToJson(ChatMessage data) => json.encode(data.toMap());
   factory ChatMessage.fromMap(Map<String, dynamic> json) => ChatMessage(
-    name: json["name"],
-    text: json["text"],
-    type: json["ChatMessageType"],
-  );
+        id: json["id"],
+        name: json["name"],
+        text: json["text"],
+        type: json["type"],
+      );
 
-  Map<String, dynamic> toMap() => {
-    "name": name,
-    "text": text,
-    "ChatMessageType": type,
-  };
+  Map<String, dynamic> toMap() =>
+      {"id": id, "name": name, "text": text, "type": type};
 }
