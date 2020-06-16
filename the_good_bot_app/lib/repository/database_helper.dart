@@ -39,14 +39,15 @@ class DatabaseHelper {
     return database;
   }
 
-  void _createTables(Database database, int version) async {
+   void _createTables(Database database, int version) async {
     // Criando a tabela de chat
     await database.execute(
       '''
       CREATE TABLE ChatMessage (
-        name TEXT PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        name TEXT,
         text TEXT,
-        ChatMessageType TEXT
+        type TEXT
       )
       ''',
     );

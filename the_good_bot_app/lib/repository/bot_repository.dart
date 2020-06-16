@@ -14,18 +14,13 @@ class BotRepository {
     var connection = await _databaseHelper.connection;
     var result = await connection.query(
       "ChatMessage",
-      columns: [
-        "name",
-        "text",
-        "ChatMessageType",
-      ],
+      columns: ["id", "name", "text", "type"],
     );
+    List<ChatMessage> listaChat = [];
 
-    // Converte a lista de Maps para Lista de chat
-    List<ChatMessage> listaChat = new List<ChatMessage>();
-    for (Map i in result) {
-      listaChat.add(ChatMessage.fromMap(i));
-    }
+    result.forEach((element) {
+      listaChat.add(ChatMessage.fromMap(element));
+    });
 
     return listaChat;
   }
@@ -39,31 +34,11 @@ class BotRepository {
     return result;
   }
 
-  Future<int> createRaw(ChatMessage chatMessage) async {
-    var connection = await _databaseHelper.connection;
-    var sqlCommand = " INSERT INTO ChatMessage ( " +
-        "  name , " +
-        "  text , " +
-        "  ChatMessageType , " +
-        "VALUES ( " +
-        "    '${chatMessage.name}' , " +
-        "    '${chatMessage.text}' , " +
-        "    ${chatMessage.type}, " +
-        "  ) ";
-
-    var result = await connection.rawInsert(sqlCommand);
-    return result;
-  }
-
   Future<ChatMessage> get(String name) async {
     var connection = await _databaseHelper.connection;
     List<Map> results = await connection.query(
       "ChatMessage",
-      columns: [
-        "name",
-        "text",
-        "ChatMessageType"
-      ],
+      columns: ["name", "text", "ChatMessageType"],
       where: 'name = ?',
       whereArgs: ['name'],
     );
@@ -89,5 +64,10 @@ class BotRepository {
     }
   }
 
-
+  Future<List<ChatMessage>> deleteAll() async {
+    var connection = await _databaseHelper.connection;
+    var sqlCommand = "DELETE FROM ChatMessage";
+    await connection.rawQuery(sqlCommand);
+    return findAll();
+  }
 }

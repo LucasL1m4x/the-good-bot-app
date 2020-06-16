@@ -7,6 +7,14 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(238, 15, 82, .9),
           title: Text("The Good Bot"),
+          <Widget>[
+                 IconButton(
+            icon: Icon(Icons.delete_sweep),
+            onPressed: () {
+              botRepository.deleteAll();
+            },
+          ),
+         ],
         ),
       body: Container(
         padding: EdgeInsets.only(top: 60, left: 40, right: 40),
