@@ -15,7 +15,6 @@ class _ChatPageState extends State<ChatPage> {
 
   BotRepository botRepository = new BotRepository();
 
-
   @override
   void dispose() {
     super.dispose();
@@ -41,42 +40,53 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildList() {
     return Flexible(
-      child: ListView.builder(
-        padding: EdgeInsets.all(8.0),
-        reverse: true,
-        itemBuilder: (_, int index) => ChatMessageListItem(chatMessage: _messageList[index]),
-        itemCount: _messageList.length,
+      child: FutureBuilder(
+        future: botRepository.findAll(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView.builder(
+              padding: EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) =>
+                  ChatMessageListItem(chatMessage: snapshot.data[index]),
+              itemCount: snapshot.data.length,
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
 
   void _sendMessage({String text}) {
     _controllerText.clear();
-    _addMessage(name: 'Flávio Moreni', text: text, type: ChatMessageType.sent);
+    _addMessage(name: 'Flávio Moreni', text: text, type: 'sent');
   }
 
-  void _addMessage({String name, String text, ChatMessageType type}) {
-    var message = ChatMessage(
-        text: text, name: name, type: type);
+  void _addMessage({String name, String text, String type}) {
+    var message = ChatMessage(text: text, name: name, type: type);
     setState(() {
       _messageList.insert(0, message);
-      botRepository.createRaw(ChatMessage());
+      if (!(text == 'Escrevendo...')) {
+        botRepository.create(message);
+      }
     });
 
-    if (type == ChatMessageType.sent) {
+    if (type == 'sent') {
       _dialogFlowRequest(query: message.text);
     }
   }
 
-
   Future _dialogFlowRequest({String query}) async {
-    _addMessage(
-        name: 'O bom robô',
-        text: 'Escrevendo...',
-        type: ChatMessageType.received);
+    _addMessage(name: 'O bom robô', text: 'Escrevendo...', type: 'received');
 
-    AuthGoogle authGoogle = await AuthGoogle(fileJson: "assets/credentials.json").build();
-    Dialogflow dialogflow = Dialogflow(authGoogle: authGoogle, language: "pt-BR");
+    AuthGoogle authGoogle =
+        await AuthGoogle(fileJson: "assets/credentials.json").build();
+    Dialogflow dialogflow =
+        Dialogflow(authGoogle: authGoogle, language: "pt-BR");
     AIResponse response = await dialogflow.detectIntent(query);
 
     setState(() {
@@ -86,7 +96,7 @@ class _ChatPageState extends State<ChatPage> {
     _addMessage(
         name: 'O bom robô',
         text: response.getMessage() ?? '',
-        type: ChatMessageType.received);
+        type: 'received');
   }
 
   Widget _buildTextField() {
