@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import '../repository/bot_repository.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatelessWidget {
+  BotRepository botRepository = new BotRepository();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(238, 15, 82, .9),
           title: Text("The Good Bot"),
-          <Widget>[
+          actions: <Widget>[
                  IconButton(
             icon: Icon(Icons.delete_sweep),
             onPressed: () {
