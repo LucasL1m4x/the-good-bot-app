@@ -8,7 +8,7 @@ class ChatMessageListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return chatMessage.type == ChatMessageType.sent
+    return chatMessage.type == 'sent'
         ? _showSentMessage()
         : _showReceivedMessage();
   }
