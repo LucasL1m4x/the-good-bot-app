@@ -22,7 +22,7 @@ class BotRepository {
       listaChat.add(ChatMessage.fromMap(element));
     });
 
-    return listaChat;
+     return listaChat.reversed.toList();
   }
 
   Future<int> create(ChatMessage chatMessage) async {
