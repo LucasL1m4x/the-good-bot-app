@@ -4,7 +4,7 @@
 
 Aplicativo de chatbot desenvolvido em Flutter para a disciplina Desenvolvimento Cross Plataform/Desenvolvimento Mobile do projeto N2020
 
-| <img src="https://user-images.githubusercontent.com/61830983/84713421-4f83e380-af41-11ea-9d79-83757cb1690d.png" height="400" width="200"> | <img src="https://user-images.githubusercontent.com/61830983/84713452-5e6a9600-af41-11ea-9305-84bf37606b20.png" height="400" width="200"> |
+| <img src="https://user-images.githubusercontent.com/61830983/84846284-cd6ceb00-b024-11ea-91ba-24cf25b9a932.png" height="400" width="200"> | <img src="https://user-images.githubusercontent.com/61830983/84846484-5126d780-b025-11ea-96f2-5d37c5792d41.png" height="400" width="200"> |
 |:-----------------------------------------------------------------------------------------------------------------------------------------:|-------------------------------------------------------------------------------------------------------------------------------------------|
 
 ## Tecnologias usadas no projeto
@@ -12,6 +12,7 @@ Aplicativo de chatbot desenvolvido em Flutter para a disciplina Desenvolvimento 
 * Navigations
 * Integração flutter-dialogflow
 * SQFLite
+* Async
 
 
 ## Usar outro bot do DialogFlow no projeto
