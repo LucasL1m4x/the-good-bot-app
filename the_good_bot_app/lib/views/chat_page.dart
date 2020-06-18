@@ -46,7 +46,7 @@ class _ChatPageState extends State<ChatPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
               padding: EdgeInsets.all(8.0),
-              reverse: false,
+              reverse: true,
               itemBuilder: (_, int index) =>
                   ChatMessageListItem(chatMessage: snapshot.data[index]),
               itemCount: snapshot.data.length
@@ -78,7 +78,7 @@ class _ChatPageState extends State<ChatPage> {
 
   void _sendMessage({String text}) {
     _controllerText.clear();
-    _addMessage(name: 'Flávio Moreni', text: text, type: 'sent');
+    _addMessage(name: 'Usuário', text: text, type: 'sent');
   }
 
   Future _dialogFlowRequest({String query}) async {
